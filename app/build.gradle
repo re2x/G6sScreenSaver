@@ -12,15 +12,15 @@ android {
     }
 
     signingConfigs {
-        Properties signingProperties = new Properties()
-        signingProperties.load(rootProject.file("local.properties").newDataInputStream())
         release {
             storeFile file("../G6sScreenSaver.jks")
-            storePassword signingProperties.hasProperty("KEY_PASSWORD") ? signingProperties.get("KEY_PASSWORD") : System.getenv("KEY_PASSWORD")
+            storePassword System.getenv("KEY_PASSWORD")
             keyAlias "G6sScreenSaver"
-            keyPassword signingProperties.hasProperty("KEY_PASSWORD") ? signingProperties.get("KEY_PASSWORD") : System.getenv("KEY_PASSWORD")
+            keyPassword System.getenv("KEY_PASSWORD")
         }
         debug {
+            Properties signingProperties = new Properties()
+            signingProperties.load(rootProject.file("local.properties").newDataInputStream())
             storeFile file("../G6sScreenSaver.jks")
             storePassword signingProperties.get("KEY_PASSWORD")
             keyAlias "G6sScreenSaver"
@@ -31,8 +31,10 @@ android {
 
     buildTypes {
         debug{
+            signingConfig signingConfigs.debug
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
