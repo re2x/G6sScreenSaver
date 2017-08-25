@@ -14,24 +14,15 @@ android {
     signingConfigs {
         release {
             storeFile file("../G6sScreenSaver.jks")
-            storePassword System.getenv("KEY_PASSWORD")
+            storePassword project.hasProperty("KEY_PASSWORD") ? KEY_PASSWORD : System.getenv("KEY_PASSWORD")
             keyAlias "G6sScreenSaver"
-            keyPassword System.getenv("KEY_PASSWORD")
+            keyPassword project.hasProperty("KEY_PASSWORD") ? KEY_PASSWORD : System.getenv("KEY_PASSWORD")
         }
-        debug {
-            Properties signingProperties = new Properties()
-            signingProperties.load(rootProject.file("local.properties").newDataInputStream())
-            storeFile file("../G6sScreenSaver.jks")
-            storePassword signingProperties.get("KEY_PASSWORD")
-            keyAlias "G6sScreenSaver"
-            keyPassword signingProperties.get("KEY_PASSWORD")
-        }
-
     }
 
     buildTypes {
         debug{
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
         release {
             signingConfig signingConfigs.release
