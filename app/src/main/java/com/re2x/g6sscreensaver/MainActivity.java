@@ -2,7 +2,6 @@ package com.re2x.g6sscreensaver;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.app.WallpaperInfo;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
@@ -101,7 +99,7 @@ public class MainActivity extends Activity {
             }
 
             // 导航信息
-            boolean isArrival = SpHelper.getBoolean(SpHelper.KEY_NAV_ARRIVE_STATUS, true);
+            boolean isArrival = false;//SpHelper.getBoolean(SpHelper.KEY_NAV_ARRIVE_STATUS, true);
             if (isArrival) {
                 MainActivity.this.tvTitleDate.setVisibility(View.GONE);
                 MainActivity.this.tvLargeDate.setVisibility(View.VISIBLE);
@@ -165,10 +163,10 @@ public class MainActivity extends Activity {
         intentFilter.addAction(NavBroadcastReceiver.SCREEN_ON);
         navBroadcastReceiver = new NavBroadcastReceiver();
         registerReceiver(navBroadcastReceiver, intentFilter);
-//        Intent intent = new Intent();
-//        intent.setAction("AUTONAVI_STANDARD_BROADCAST_SEND");
-//        intent.putExtra("KEY_TYPE", 10001);
-//        sendBroadcast(intent);
+        Intent intent = new Intent();
+        intent.setAction("AUTONAVI_STANDARD_BROADCAST_SEND");
+        intent.putExtra("KEY_TYPE", 10001);
+        sendBroadcast(intent);
 
         // 开启GPS
         openGPSSettings();
@@ -332,16 +330,10 @@ public class MainActivity extends Activity {
     private void updateWallpaper() {
         WallpaperManager wallpaperManager = WallpaperManager
                 .getInstance(this);
-        WallpaperInfo wallInfo = wallpaperManager.getWallpaperInfo();
-        if (wallInfo != null) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
-            rlBackground.getBackground().setAlpha(225);
-        } else {
-            Drawable wallpaperDrawable = wallpaperManager.getDrawable();
-            if (wallpaperDrawable != null) {
-                rlWallpaper.setBackground(wallpaperDrawable);
-                rlBackground.getBackground().setAlpha(235);
-            }
+        Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+        if (wallpaperDrawable != null) {
+            rlWallpaper.setBackground(wallpaperDrawable);
+            rlBackground.getBackground().setAlpha(235);
         }
     }
 

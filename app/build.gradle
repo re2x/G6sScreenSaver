@@ -10,7 +10,28 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        Properties signingProperties = new Properties()
+        signingProperties.load(rootProject.file("local.properties").newDataInputStream())
+        release {
+            storeFile file("../G6sScreenSaver.jks")
+            storePassword signingProperties.hasProperty("KEY_PASSWORD") ? signingProperties.get("KEY_PASSWORD") : System.getenv("KEY_PASSWORD")
+            keyAlias "G6sScreenSaver"
+            keyPassword signingProperties.hasProperty("KEY_PASSWORD") ? signingProperties.get("KEY_PASSWORD") : System.getenv("KEY_PASSWORD")
+        }
+        debug {
+            storeFile file("../G6sScreenSaver.jks")
+            storePassword signingProperties.get("KEY_PASSWORD")
+            keyAlias "G6sScreenSaver"
+            keyPassword signingProperties.get("KEY_PASSWORD")
+        }
+
+    }
+
     buildTypes {
+        debug{
+        }
         release {
             minifyEnabled true
             shrinkResources true
@@ -18,16 +39,8 @@ android {
         }
     }
 
-    signingConfigs {
-        release {
-            storeFile file("../G6sScreenSaver.jks")
-            storePassword project.hasProperty("KEY_PASSWORD") ? KEY_PASSWORD : System.getenv("KEY_PASSWORD")
-            keyAlias "G6sScreenSaver"
-            keyPassword project.hasProperty("KEY_PASSWORD") ? KEY_PASSWORD : System.getenv("KEY_PASSWORD")
-        }
-    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
 }
