@@ -28,11 +28,14 @@ before_install:
 script:
   - ./gradlew assembleRelease
 
+before_deploy:
+  - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/com.re2x.g6sscreensaver.apk
+
 deploy:
   provider: releases
   api_key:
     secure: "bno5ij97LWoyeWl9Ia054Am7Q+MKhoZioBhAm/O+YSmY7+zvoRnMFZvWNPeyEqpcBjzzOnreTU8/lpXdAxUbxkyjA42bGEDDRR/cjMq0z7+1UNKaV5RHG3wP8vBA58rP03wTUKQ81MKYAno7zBgArzXpmyCmJ/WQPVL1/KXI1tyablm4qVyHZq+v2MT/RM3FSI8XHoggD4jQ+i1liz+V7H2OEnp/QNSV/k9LzaQwEj1X6mPBMgIziNMZYBp9Xo1Gsm7h458DCKx1LaKReQM9w3Ao0SNZwE3+UnJ4IbXA5yrT6OqUjSWTUQqCdW3JAdoozTUOkMsKeM4Dg0tqp/55561KCQBJnAaqD3zZpS0LTEL/1a0+NmV841bndqpjLDFDpLqP4PGk4l0BmuJ46MLQ7SueQaREUGeBpk1HruiLVj2P9H3fGEdFvy/Cv4un4qbe+9mrRHdPq1xU1fJORsUA8dyVzG9sBnpCpNYFv/gC8pGAWNCzbSBnFTfPpi5vYAsG2ALBocWPSca3Sx3C2joXCd+lYbTi616MngIbWO/xa6Ea4dr0jSGpBekSrfSseg+4G2itiN4RV2LEmUWHtSwZVb3bqJJK/w55tmiD/fBtKuJH+Oj1vY4I/eTRnBtJOIqazv+DMLL1af3Lh6qakj9nujYdNzTiee1RVEInU1kC8AA="
-  file: app/build/outputs/apk/app-release.apk
+  file: app/build/outputs/apk/com.re2x.g6sscreensaver.apk
   skip_cleanup: true
   on:
     tags: true
