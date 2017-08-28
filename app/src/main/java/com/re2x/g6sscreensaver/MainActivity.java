@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
             }
 
             // 导航信息
-            boolean isArrival = false;//SpHelper.getBoolean(SpHelper.KEY_NAV_ARRIVE_STATUS, true);
+            boolean isArrival = SpHelper.getBoolean(SpHelper.KEY_NAV_ARRIVE_STATUS, false);
             if (isArrival) {
                 MainActivity.this.tvTitleDate.setVisibility(View.GONE);
                 MainActivity.this.tvLargeDate.setVisibility(View.VISIBLE);
